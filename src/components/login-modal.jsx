@@ -1,7 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import takiImage from './resources/superTaki.jpg';
-
 export default class LoginModal extends React.Component {
     constructor(args) {
         super(...args);
@@ -49,6 +47,10 @@ export default class LoginModal extends React.Component {
             } else {
                 if (response.status === 403) {
                     this.setState(()=> ({errMessage: "User name already exist, please try another one"}));
+                }
+                if(response.status === 402)
+                {
+                    this.setState(()=> ({errMessage: "You must enter a User Name"}));
                 }
                 this.props.loginErrorHandler();
             }
