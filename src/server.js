@@ -5,21 +5,25 @@ const bodyParser = require('body-parser');
 const userManagement = require('./server/userManagement');
 const auth = require('./server/auth');
 // const chatManagement = require('./server/chat');
-const lobbyManagment = require('./server/lobby');
+const lobbyManagment = require('./server/lobbyServer');
+const gameRoomManagment = require('./server/gameRoomServer');
+
 const app = express();
 
 app.use(session({ secret: 'keyboard cat', cookie: {maxAge:269999999999}}));
 app.use(bodyParser.text());
 
+app.use(express.static(path.resolve(__dirname, "..", "src/components/resources")));
 app.use(express.static(path.resolve(__dirname, "..", "public")));
 
-// app.get('/',auth.userAuthentication, (req, res, next) => {		
-// 	console.log('root', req.session.id);	
+// app.get('/',auth.userAuthentication, (req, res, next) => {
+// 	console.log('root', req.session.id);
 // 	next();
 // })
 
 app.use('/users', userManagement);
-app.use('/chat', chatManagement);
-app.use('/lobby', lobbyManagment)
+app.use('/lobby', lobbyManagment);
+app.use('/gameRoom', gameRoomManagment);
+// app.use('/chat', chatManagement)
 
 app.listen(3000, console.log('Example app listening on port 3000!'));
